@@ -24,7 +24,7 @@
               <i class="fas fa-recycle papelera_amarilla"></i>
             </td>
             <td>
-              <img [src]="objMaterias.fotoBase64" alt="Foto perdida" style="height: 40px; width: 45px"
+              <img [src]="objMaterias.fotobase64" alt="Foto perdida" style="height: 40px; width: 45px"
                 onerror="this.src='../assets/img/no_photo.png';" />
             </td>
           </tr>
@@ -52,15 +52,15 @@
               id="foto"
               name="foto"
               [(ngModel)]="materiaSeleccionado.foto_docente"
-              accept="image/x-png,image/jpeg,image/gif"
+              accept="image/x-png,image/jpeg"
             />
-            <button type="button" class="btn-info btn-sm" (click)="fileInput.click()">
+            <button type="button" class="btn-primary btn-sm" (click)="fileInput.click()">
               <span>+</span>
               <input
                 type="file"
                 style="display: none"
                 #fileInput
-                (change)="seleccionarFoto($event)"
+                (change)="guardarFoto($event)"
               />
             </button>
           </div>

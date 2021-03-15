@@ -73,10 +73,11 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  public seleccionarFoto(input: any): any {
+  public guardarFoto(input: any): any {
     if (!input.target.files[0] || input.target.files[0].length === 0) {
       return;
     }
+    //mimeType hace referencia al tipo de dato permitido
     const mimeType = input.target.files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       const parametros = {
