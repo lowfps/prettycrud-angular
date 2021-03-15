@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row border border-secondary mt-3 mb-3">
+    <div class="col-md-8">
+      <span class="text-white"> Listado de materias </span>
+      <table class="table table-hover table-dark manito">
+        <thead>
+          <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 30%">Materia</th>
+            <th style="width: 35%">Docente</th>
+            <th style="width: 15%">&nbsp;</th>
+            <th style="width: 15%">Foto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let objMaterias of materiaArreglo" (click)="seleccionar(objMaterias)"
+            [class.active]="objMaterias == materiaSeleccionado">
+            <td>{{ objMaterias.codigo }}</td>
+            <td>{{ objMaterias.nombre_materia }}</td>
+            <td>{{ objMaterias.nombre_docente }}</td>
+            <td>
+              <i class="far fa-trash-alt papelera_roja" (click)="eliminar(objMaterias)"></i>
+              &nbsp;
+              <i class="fas fa-recycle papelera_amarilla"></i>
+            </td>
+            <td>
+              <img [src]="objMaterias.fotoBase64" alt="Foto perdida" style="height: 40px; width: 45px"
+                onerror="this.src='../assets/img/no_photo.png';" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <form>
+        <div class="form-group">
+          <label class="text-white" for="materia">Nombre Materia</label>
+          <input type="text" class="form-control" id="materia" name="materia"
+            [(ngModel)]="materiaSeleccionado.nombre_materia" />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="docente">Nombre Docente</label>
+          <input type="text" class="form-control" id="docente" name="docente"
+            [(ngModel)]="materiaSeleccionado.nombre_docente" />
+        </div>
+        <div class="form-group">
+          <label class="text-white" for="foto">Foto</label>
+          <div class="input-group-append">
+            <input
+              type="text"
+              class="form-control"
+              id="foto"
+              name="foto"
+              [(ngModel)]="materiaSeleccionado.foto_docente"
+              accept="image/x-png,image/jpeg,image/gif"
+            />
+            <button type="button" class="btn-info btn-sm" (click)="fileInput.click()">
+              <span>+</span>
+              <input
+                type="file"
+                style="display: none"
+                #fileInput
+                (change)="seleccionarFoto($event)"
+              />
+            </button>
+          </div>
+        </div>
+        <div class="text-right mb-3">
+          <img [src]="materiaSeleccionado.fotobase64" alt="Foto perdida" class="img-thumbnail"
+            style="height: 200%; width: 100%" onerror="this.src='../assets/img/no_photo.png';" />
+        </div>
+        <p *ngIf="
+            materiaSeleccionado.cod_materia == 0;
+            then codigoCrear;
+            else codigoActualizar
+          "></p>
+        <ng-template #codigoCrear>
+          <button class="btn btn-outline-success" (click)="procesarMateria()">
+            Crear
+          </button>
+        </ng-template>
+        <ng-template #codigoActualizar>
+          <button class="btn btn-outline-success mx-2" (click)="procesarMateria()">
+            Actualizar
+          </button>
+        </ng-template>
+      </form>
+    </div>
+  </div>
+</div>

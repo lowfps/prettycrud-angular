@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+.papelera_roja{
+  color: rgb(245, 76, 76);
+}
+.papelera_amarilla{
+  color:  rgb(76, 76, 224)
+}
+.manito tr{
+  cursor: pointer;
+}
