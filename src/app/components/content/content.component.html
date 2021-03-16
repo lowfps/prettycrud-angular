@@ -19,7 +19,7 @@
             <td>{{ objMaterias.nombre_materia }}</td>
             <td>{{ objMaterias.nombre_docente }}</td>
             <td>
-              <i class="far fa-trash-alt papelera_roja" (click)="eliminar(objMaterias)"></i>
+              <i class="far fa-trash-alt papelera_roja" (click)="abrirModal(modalEliminarConfirmar, objMaterias)"></i>
               &nbsp;
               <i class="fas fa-recycle papelera_amarilla"></i>
             </td>
@@ -46,22 +46,11 @@
         <div class="form-group">
           <label class="text-white" for="foto">Foto</label>
           <div class="input-group-append">
-            <input
-              type="text"
-              class="form-control"
-              id="foto"
-              name="foto"
-              [(ngModel)]="materiaSeleccionado.foto_docente"
-              accept="image/x-png,image/jpeg"
-            />
+            <input type="text" class="form-control" id="foto" name="foto" [(ngModel)]="materiaSeleccionado.foto_docente"
+              accept="image/x-png,image/jpeg" />
             <button type="button" class="btn-primary btn-sm" (click)="fileInput.click()">
               <span>+</span>
-              <input
-                type="file"
-                style="display: none"
-                #fileInput
-                (change)="guardarFoto($event)"
-              />
+              <input type="file" style="display: none" #fileInput (change)="guardarFoto($event)" />
             </button>
           </div>
         </div>
@@ -88,3 +77,18 @@
     </div>
   </div>
 </div>
+<!-- Plantilla para ventana modal -->
+
+<ng-template #modalEliminarConfirmar>
+  <div class="modal-header bg-dark text-white" style="padding: 4px;">
+    <h4 class="modal-title pull-left">{{modalTitulo}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">{{modalTexto}}<br /><strong>{{modalContenido}}</strong></div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="cancelarEliminar()">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="eliminar()">Elminar</button>
+  </div>
+</ng-template>

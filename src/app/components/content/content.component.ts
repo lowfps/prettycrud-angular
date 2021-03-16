@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Materia } from './../../models/materia';
 import { ARREGLO_MATERIAS } from './../../mocks/materia-mocks';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,13 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ContentComponent implements OnInit {
   public materiaSeleccionado: Materia;
   public materiaArreglo: Materia[];
+
   public tmpBase64: any;
+
+  public modalRef: BsModalRef;
+  public modalTitulo: string;
+  public modalTexto: string;
+  public modalContenido: string;
 
   constructor(
     public modalService: BsModalService,
@@ -20,6 +26,10 @@ export class ContentComponent implements OnInit {
   ) {
     this.materiaSeleccionado = new Materia(0, '', '', '', '');
     this.materiaArreglo = ARREGLO_MATERIAS;
+    this.modalRef = modalService.show('');
+    this.modalTitulo = '';
+    this.modalTexto = '';
+    this.modalContenido = '';
   }
 
   ngOnInit(): void {}
@@ -64,13 +74,28 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  public eliminar(objMat: Materia): void {
-    if (confirm('Deseas eliminar este registro?')) {
-      this.materiaArreglo = this.materiaArreglo.filter(
-        (element) => element != objMat
-      );
-      this.materiaSeleccionado = new Materia(0, '', '', '', '');
-    }
+  public eliminarMateria(objMat: Materia): void {
+    this.materiaArreglo = this.materiaArreglo.filter(
+      (element) => element != objMat
+    );
+    this.materiaSeleccionado = new Materia(0, '', '', '', '');
+  }
+
+  public eliminar(): void {
+    this.eliminarMateria(this.materiaSeleccionado);
+    this.modalRef.hide();
+  }
+
+  public cancelarEliminar(): void {
+    this.modalRef.hide();
+  }
+
+  public abrirModal(template: TemplateRef<any>, materiaTmp: Materia): void {
+    this.materiaSeleccionado = materiaTmp;
+    this.modalRef = this.modalService.show(template, { class: 'modal-md' });
+    this.modalTitulo = 'Advertencia';
+    this.modalTexto = '¿Está seguro de eliminar materia?';
+    this.modalContenido = this.materiaSeleccionado.nombre_materia;
   }
 
   public guardarFoto(input: any): any {
